@@ -61,7 +61,7 @@ def run():
     page = get_page()
     table = page.xpath("//table")[0]
 
-    with open(join(data_dir, 'countries_fiscal_years.csv'), 'w', encoding='utf-8') as f:
+    with open(join(data_dir, 'countries_fiscal_years.csv'), 'w') as f:
         writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"], 
                                 quoting=csv.QUOTE_ALL)
         writer.writeheader()
