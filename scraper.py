@@ -23,10 +23,6 @@ def clean_fy(value):
     if value == "NA": return "Unknown"
     fy_start, fy_end = value.split("-")
     return fy_start
-            
-def save_csv(name, codelist, fieldnames):
-        for row in codelist:
-            writer.writerow(row)
 
 def init_git_repo():
     shutil.rmtree(output_dir, ignore_errors=True)
@@ -61,6 +57,7 @@ def run():
     page = get_page()
     table = page.xpath("//table")[0]
 
+    init_git_repo()
     with open(join(data_dir, 'countries_fiscal_years.csv'), 'w') as f:
         writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"], 
                                 quoting=unicodecsv.QUOTE_ALL)
@@ -75,7 +72,6 @@ def run():
                     "fy_start": clean_fy(fiscal_year)}
             scraperwiki.sqlite.save(unique_keys=['code'], data=data)
             writer.writerow(data)
-    init_git_repo()
     push_to_github()
 
 run()
