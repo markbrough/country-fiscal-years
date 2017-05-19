@@ -25,7 +25,7 @@ def run():
         fiscal_year = cols[1].text
         scraperwiki.sqlite.save(unique_keys=['code'], data={
             "code": country_code.upper(), 
-            "name": "country_name",
+            "name": country_name,
             "fy_start": clean_fy(fiscal_year)})
 
 run()
