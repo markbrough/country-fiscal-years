@@ -22,10 +22,10 @@ def clean_fy(value):
     if value == "calendar year": return "01 January"
     if value == "NA": return "Unknown"
     fy_start, fy_end = value.split("-")
-    day, month  = fy_start.split(" ")
+    day, month  = fy_start.strip().split(" ")
     if len(day)==1:
         return "0{} {}".format(day, month)
-    return fy_start
+    return fy_start.strip()
 
 def init_git_repo():
     shutil.rmtree(output_dir, ignore_errors=True)
