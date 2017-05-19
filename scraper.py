@@ -63,7 +63,7 @@ def run():
 
     with open(join(data_dir, 'countries_fiscal_years.csv'), 'w') as f:
         writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"], 
-                                quoting=csv.QUOTE_ALL)
+                                quoting=unicodecsv.QUOTE_ALL)
         writer.writeheader()
         for row in table.xpath("//tr")[1:]:
             country_code = row.get("id")
