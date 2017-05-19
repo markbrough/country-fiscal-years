@@ -2,3 +2,4 @@ scraperwiki
 requests
 GitPython
 lxml
+unicodecsv
