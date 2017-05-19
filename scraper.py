@@ -19,9 +19,12 @@ def get_page():
 
 def clean_fy(value):
     value = value.strip()
-    if value == "calendar year": return "1 January"
+    if value == "calendar year": return "01 January"
     if value == "NA": return "Unknown"
     fy_start, fy_end = value.split("-")
+    day, month  = fy_start.split(" ")
+    if len(day)==1:
+        return "0{} {}".format(day, month)
     return fy_start
 
 def init_git_repo():
