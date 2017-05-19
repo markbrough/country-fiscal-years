@@ -11,7 +11,7 @@ from glob import glob
 import unicodecsv
 
 output_dir = "output"
-data_dir = "data"
+data_dir = join(output_dir, "data")
 
 def get_page():
     r = requests.get(URL)
