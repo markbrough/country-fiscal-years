@@ -23,6 +23,8 @@ def clean_fy(value):
     if value == "NA": return "Unknown"
     fy_start, fy_end = value.split("-")
     day, month  = fy_start.strip().split(" ")
+    # Samoa says "June 1" - so switch around
+    if len(month)<3: day, month = month, day
     if len(day)==1:
         return "0{} {}".format(day, month)
     return fy_start.strip()
@@ -33,6 +35,7 @@ def init_git_repo():
     git.remote('add', 'origin', 'https://{}@github.com/markbrough/country-fiscal-years.git'.format(environ.get('MORPH_GH_API_KEY')))
     try:
         git.pull('origin', 'update')
+        git.checkout(b='update')
     except:
         git.pull('origin', 'gh-pages')
         git.checkout(b='update')
