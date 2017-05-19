@@ -75,5 +75,7 @@ def run():
                     "fy_start": clean_fy(fiscal_year)}
             scraperwiki.sqlite.save(unique_keys=['code'], data=data)
             writer.writerow(data)
+    init_git_repo()
+    push_to_github()
 
 run()
