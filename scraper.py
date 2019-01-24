@@ -5,6 +5,7 @@ import scraperwiki
 import requests
 import shutil
 from git import Repo
+from git.exc import GitCommandError
 from os.path import join
 from os import environ, remove
 from glob import glob
@@ -46,13 +47,13 @@ def push_to_github():
     url = 'https://api.github.com/repos/markbrough/country-fiscal-years/pulls'
     git = Repo.init(output_dir).git
     result = git.add('.')
-    if len(result) == 0:
-        print("No updates required!")
-        return True
-
     git.config('user.email', environ.get('MORPH_GH_EMAIL'))
     git.config('user.name', environ.get('MORPH_GH_USERNAME'))
-    git.commit(m='Update')
+    try:
+        git.commit(m='Update')
+    except GitCommandError:
+        print "Nothing to commit!"
+        return True
     git.push('origin', 'update')
     payload = {
         'title': 'Merge in latest changes',
