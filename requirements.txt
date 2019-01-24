@@ -1,4 +1,5 @@
 scraperwiki
+urllib3[secure]
 requests
 GitPython
 lxml
