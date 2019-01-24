@@ -45,7 +45,11 @@ def init_git_repo():
 def push_to_github():
     url = 'https://api.github.com/repos/markbrough/country-fiscal-years/pulls'
     git = Repo.init(output_dir).git
-    git.add('.')
+    result = git.add('.')
+    if len(result) == 0:
+        print("No updates required!")
+        return True
+
     git.config('user.email', environ.get('MORPH_GH_EMAIL'))
     git.config('user.name', environ.get('MORPH_GH_USERNAME'))
     git.commit(m='Update')
@@ -62,7 +66,6 @@ def push_to_github():
 def run():
     page = get_page()
     table = page.xpath("//table")[0]
-
     init_git_repo()
     with open(join(data_dir, 'countries_fiscal_years.csv'), 'w') as f:
         writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"], 
