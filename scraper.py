@@ -1,6 +1,7 @@
 URL = "https://www.cia.gov/library/publications/the-world-factbook/fields/2080.html"
 
 from lxml import html
+environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 import scraperwiki
 import requests
 import shutil
