@@ -1,7 +1,7 @@
 URL = "https://www.cia.gov/library/publications/the-world-factbook/fields/2080.html"
 
 from lxml import html
-from os import environ
+from os import environ, remove
 environ['SCRAPERWIKI_DATABASE_NAME'] = 'sqlite:///data.sqlite'
 import scraperwiki
 import requests
@@ -9,7 +9,6 @@ import shutil
 from git import Repo
 from git.exc import GitCommandError
 from os.path import join
-from os import environ, remove
 from glob import glob
 import unicodecsv
 
