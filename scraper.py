@@ -1,4 +1,4 @@
-URL = "https://www.cia.gov/library/publications/the-world-factbook/fields/2080.html"
+URL = "https://www.cia.gov/library/publications/the-world-factbook/fields/228.html"
 
 from lxml import html
 from os import environ, remove
@@ -67,18 +67,18 @@ def push_to_github():
 
 def run():
     page = get_page()
-    table = page.xpath("//table")[0]
+    table = page.xpath("//table[@id='fieldListing']")[0]
     init_git_repo()
     with open(join(data_dir, 'countries_fiscal_years.csv'), 'w') as f:
-        writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"], 
+        writer = unicodecsv.DictWriter(f, fieldnames=["code","name","fy_start"],
                                 quoting=unicodecsv.QUOTE_ALL)
         writer.writeheader()
         for row in table.xpath("//tr")[1:]:
             country_code = row.get("id")
             cols = row.xpath("td")
             country_name = cols[0].find("a").text
-            fiscal_year = cols[1].text
-            data = {"code": country_code.upper(), 
+            fiscal_year = cols[1].find('div').find('div').text
+            data = {"code": country_code.upper(),
                     "name": country_name,
                     "fy_start": clean_fy(fiscal_year)}
             scraperwiki.sqlite.save(unique_keys=['code'], data=data)
